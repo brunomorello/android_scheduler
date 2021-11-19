@@ -1,5 +1,7 @@
 package br.com.bmo.mob.scheduler.ui.activity;
 
+import static br.com.bmo.mob.scheduler.ui.activity.ActiviiesConstants.PERSON_KEY;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -22,7 +24,7 @@ import br.com.bmo.mob.scheduler.model.Person;
 
 public class ListPeopleActivity extends AppCompatActivity {
 
-    private PersonDAO dao = new PersonDAO();
+    private PersonDAO personDAO = new PersonDAO();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -32,8 +34,8 @@ public class ListPeopleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_people);
         setTitle("Family");
 
-        dao.save(new Person("Bruno", "test@test.com", "123"));
-        dao.save(new Person("Jade", "jade@gmail.com", "321"));
+        personDAO.save(new Person("Bruno", "test@test.com", "123"));
+        personDAO.save(new Person("Jade", "jade@gmail.com", "321"));
 
         FloatingActionButton fabNewPerson = findViewById(R.id.activity_list_people_fab_new_person);
         fabNewPerson.setOnClickListener(v -> startActivity(new Intent(ListPeopleActivity.this, FormPersonActivity.class)));
@@ -48,22 +50,30 @@ public class ListPeopleActivity extends AppCompatActivity {
 
     private void setupListView() {
         ListView namesListView = findViewById(R.id.activity_main_names_list);
-        List<Person> people = dao.getPeople();
+        List<Person> people = personDAO.getPeople();
+
+        setAdapterToListView(namesListView, people);
+        setupListenerByItemOnList(namesListView);
+    }
+
+    private void setupListenerByItemOnList(ListView namesListView) {
+        namesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Person personSelected = (Person) parent.getItemAtPosition(position);
+                Log.i("Edit Personq", "onItemClick: Editing Person " + personSelected + " id= " + personSelected.getId());
+                Intent goToFormPersonActivity = new Intent(ListPeopleActivity.this, FormPersonActivity.class);
+                goToFormPersonActivity.putExtra(PERSON_KEY, personSelected);
+                startActivity(goToFormPersonActivity);
+            }
+        });
+    }
+
+    private void setAdapterToListView(ListView namesListView, List<Person> people) {
         namesListView.setAdapter(new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_list_item_1,
                 people
         ));
-
-        namesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Person personSelected = people.get(position);
-                Log.i("Edit Personq", "onItemClick: Editing Person " + personSelected + " id= " + personSelected.getId());
-                Intent goToFormPersonActivity = new Intent(ListPeopleActivity.this, FormPersonActivity.class);
-                goToFormPersonActivity.putExtra("person", personSelected);
-                startActivity(goToFormPersonActivity);
-            }
-        });
     }
 }

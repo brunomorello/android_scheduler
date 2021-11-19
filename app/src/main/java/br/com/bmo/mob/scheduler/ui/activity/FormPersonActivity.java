@@ -1,5 +1,7 @@
 package br.com.bmo.mob.scheduler.ui.activity;
 
+import static br.com.bmo.mob.scheduler.ui.activity.ActiviiesConstants.PERSON_KEY;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
@@ -14,7 +16,8 @@ import br.com.bmo.mob.scheduler.model.Person;
 
 public class FormPersonActivity extends AppCompatActivity {
 
-    public static final String TITLE_APP_BAR = "New Person";
+    public static final String TITLE_APP_BAR_NEW_PERSON = "New Person";
+    public static final String TITLE_APP_BAR_EDIT_PERSON = "Edit Person";
     final PersonDAO personDao = new PersonDAO();
     private EditText nameEditText;
     private EditText emailEditText;
@@ -26,8 +29,7 @@ public class FormPersonActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_form_person);
-        setTitle(TITLE_APP_BAR);
-
+        setTitleBar(getIntent());
         bindInputValues(getIntent());
         setupSaveButton();
 
@@ -57,12 +59,19 @@ public class FormPersonActivity extends AppCompatActivity {
         emailEditText = findViewById(R.id.activity_form_person_editText_email);
         phoneEditText = findViewById(R.id.activity_form_person_editText_phone);
 
-        if (data.getSerializableExtra("person") != null) {
-            Person person = (Person) data.getSerializableExtra("person");
+        if (data.getSerializableExtra(PERSON_KEY) != null) {
+            Person person = (Person) data.getSerializableExtra(PERSON_KEY);
             nameEditText.setText(person.getNameStr());
             emailEditText.setText(person.getEmailStr());
             phoneEditText.setText(person.getPhoneStr());
             personId = person.getId();
         }
+    }
+
+    private void setTitleBar(Intent intent) {
+        if (intent.getSerializableExtra(PERSON_KEY) == null)
+            setTitle(TITLE_APP_BAR_NEW_PERSON);
+        else
+            setTitle(TITLE_APP_BAR_EDIT_PERSON);
     }
 }

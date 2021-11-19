@@ -46,7 +46,7 @@ public class FormPersonActivity extends AppCompatActivity {
         String phoneStr = phoneEditText.getText().toString();
         Person person = new Person(nameStr, emailStr, phoneStr);
 
-        if (personId > 0) person.setId(personId);
+        if (personDao.isValidId(personId)) person.setId(personId);
 
         personDao.save(person);
         finish();

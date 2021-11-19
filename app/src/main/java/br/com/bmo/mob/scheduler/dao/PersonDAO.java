@@ -39,4 +39,8 @@ public class PersonDAO {
         }
         return null;
     }
+
+    public boolean isValidId(int id) {
+        return id > 0;
+    }
 }

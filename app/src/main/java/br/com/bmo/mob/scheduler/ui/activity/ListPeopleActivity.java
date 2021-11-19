@@ -24,36 +24,36 @@ import br.com.bmo.mob.scheduler.model.Person;
 
 public class ListPeopleActivity extends AppCompatActivity {
 
+    public static final String ACTIVITY_TITLE = "Family";
     private PersonDAO personDAO = new PersonDAO();
     private ArrayAdapter<Person> adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Toast.makeText(this, "Hello, Bruno!", Toast.LENGTH_LONG).show();
 
         setContentView(R.layout.activity_list_people);
-        setTitle("Family");
+        setTitle(ACTIVITY_TITLE);
 
         personDAO.save(new Person("Bruno", "test@test.com", "123"));
         personDAO.save(new Person("Jade", "jade@gmail.com", "321"));
 
         FloatingActionButton fabNewPerson = findViewById(R.id.activity_list_people_fab_new_person);
         fabNewPerson.setOnClickListener(v -> startActivity(new Intent(ListPeopleActivity.this, FormPersonActivity.class)));
-
+        setupListView();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        setupListView();
+        adapter.clear();
+        adapter.addAll(personDAO.getPeople());
     }
 
     private void setupListView() {
         ListView namesListView = findViewById(R.id.activity_main_names_list);
-        List<Person> people = personDAO.getPeople();
 
-        setAdapterToListView(namesListView, people);
+        setAdapterToListView(namesListView);
         setupListenerOnItemClick(namesListView);
         setupListenerOnItemLongClick(namesListView);
     }
@@ -81,11 +81,10 @@ public class ListPeopleActivity extends AppCompatActivity {
         });
     }
 
-    private void setAdapterToListView(ListView namesListView, List<Person> people) {
+    private void setAdapterToListView(ListView namesListView) {
         adapter = new ArrayAdapter<>(
                 this,
-                android.R.layout.simple_list_item_1,
-                people
+                android.R.layout.simple_list_item_1
         );
         namesListView.setAdapter(adapter);
     }

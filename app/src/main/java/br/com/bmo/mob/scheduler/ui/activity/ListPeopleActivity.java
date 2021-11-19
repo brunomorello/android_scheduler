@@ -25,6 +25,7 @@ import br.com.bmo.mob.scheduler.model.Person;
 public class ListPeopleActivity extends AppCompatActivity {
 
     private PersonDAO personDAO = new PersonDAO();
+    private ArrayAdapter<Person> adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,15 +54,26 @@ public class ListPeopleActivity extends AppCompatActivity {
         List<Person> people = personDAO.getPeople();
 
         setAdapterToListView(namesListView, people);
-        setupListenerByItemOnList(namesListView);
+        setupListenerOnItemClick(namesListView);
+        setupListenerOnItemLongClick(namesListView);
     }
 
-    private void setupListenerByItemOnList(ListView namesListView) {
+    private void setupListenerOnItemLongClick(ListView namesListView) {
+        namesListView.setOnItemLongClickListener((parent, view, position, id) -> {
+            Person personSelected = (Person) parent.getItemAtPosition(position);
+            Log.i("Delete Person", "setupListenerOnItemLongClick: Delete Person " + personSelected + " id= " + personSelected.getId());
+            personDAO.delete(personSelected);
+            adapter.remove(personSelected);
+            return true;
+        });
+    }
+
+    private void setupListenerOnItemClick(ListView namesListView) {
         namesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Person personSelected = (Person) parent.getItemAtPosition(position);
-                Log.i("Edit Personq", "onItemClick: Editing Person " + personSelected + " id= " + personSelected.getId());
+                Log.i("Edit Person", "onItemClick: Editing Person " + personSelected + " id= " + personSelected.getId());
                 Intent goToFormPersonActivity = new Intent(ListPeopleActivity.this, FormPersonActivity.class);
                 goToFormPersonActivity.putExtra(PERSON_KEY, personSelected);
                 startActivity(goToFormPersonActivity);
@@ -70,10 +82,11 @@ public class ListPeopleActivity extends AppCompatActivity {
     }
 
     private void setAdapterToListView(ListView namesListView, List<Person> people) {
-        namesListView.setAdapter(new ArrayAdapter<>(
+        adapter = new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_list_item_1,
                 people
-        ));
+        );
+        namesListView.setAdapter(adapter);
     }
 }

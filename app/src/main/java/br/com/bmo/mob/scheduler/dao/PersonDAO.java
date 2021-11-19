@@ -43,4 +43,10 @@ public class PersonDAO {
     public boolean isValidId(int id) {
         return id > 0;
     }
+
+    public void delete(Person person) {
+        Person personFound = findById(person.getId());
+        if (personFound != null)
+            people.remove(personFound);
+    }
 }

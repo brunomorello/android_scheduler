@@ -5,6 +5,7 @@ import static br.com.bmo.mob.scheduler.ui.activity.ActiviiesConstants.PERSON_KEY
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -44,6 +45,12 @@ public class ListPeopleActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        menu.add("Delete");
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         adapter.clear();
@@ -56,6 +63,7 @@ public class ListPeopleActivity extends AppCompatActivity {
         setAdapterToListView(namesListView);
         setupListenerOnItemClick(namesListView);
         setupListenerOnItemLongClick(namesListView);
+        registerForContextMenu(namesListView);
     }
 
     private void setupListenerOnItemLongClick(ListView namesListView) {
@@ -64,7 +72,7 @@ public class ListPeopleActivity extends AppCompatActivity {
             Log.i("Delete Person", "setupListenerOnItemLongClick: Delete Person " + personSelected + " id= " + personSelected.getId());
             personDAO.delete(personSelected);
             adapter.remove(personSelected);
-            return true;
+            return false;
         });
     }
 

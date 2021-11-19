@@ -1,5 +1,6 @@
 package br.com.bmo.mob.scheduler.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +19,7 @@ public class FormPersonActivity extends AppCompatActivity {
     private EditText nameEditText;
     private EditText emailEditText;
     private EditText phoneEditText;
+    private int personId = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -26,8 +28,12 @@ public class FormPersonActivity extends AppCompatActivity {
         setContentView(R.layout.activity_form_person);
         setTitle(TITLE_APP_BAR);
 
-        bindInputValues();
+        bindInputValues(getIntent());
+        setupSaveButton();
 
+    }
+
+    private void setupSaveButton() {
         Button btnSave = findViewById(R.id.activity_form_person_btn_save);
         btnSave.setOnClickListener(v -> {
             savePersonAndFinish();
@@ -38,14 +44,25 @@ public class FormPersonActivity extends AppCompatActivity {
         String nameStr = nameEditText.getText().toString();
         String emailStr = emailEditText.getText().toString();
         String phoneStr = phoneEditText.getText().toString();
+        Person person = new Person(nameStr, emailStr, phoneStr);
 
-        personDao.save(new Person(nameStr, emailStr, phoneStr));
+        if (personId > 0) person.setId(personId);
+
+        personDao.save(person);
         finish();
     }
 
-    private void bindInputValues() {
+    private void bindInputValues(Intent data) {
         nameEditText = findViewById(R.id.activity_form_person_editText_name);
         emailEditText = findViewById(R.id.activity_form_person_editText_email);
         phoneEditText = findViewById(R.id.activity_form_person_editText_phone);
+
+        if (data.getSerializableExtra("person") != null) {
+            Person person = (Person) data.getSerializableExtra("person");
+            nameEditText.setText(person.getNameStr());
+            emailEditText.setText(person.getEmailStr());
+            phoneEditText.setText(person.getPhoneStr());
+            personId = person.getId();
+        }
     }
 }

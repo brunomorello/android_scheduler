@@ -14,8 +14,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.util.List;
+
 import br.com.bmo.mob.scheduler.R;
 import br.com.bmo.mob.scheduler.dao.PersonDAO;
+import br.com.bmo.mob.scheduler.model.Person;
 
 public class ListPeopleActivity extends AppCompatActivity {
 
@@ -28,6 +31,9 @@ public class ListPeopleActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_list_people);
         setTitle("Family");
+
+        dao.save(new Person("Bruno", "test@test.com", "123"));
+        dao.save(new Person("Jade", "jade@gmail.com", "321"));
 
         FloatingActionButton fabNewPerson = findViewById(R.id.activity_list_people_fab_new_person);
         fabNewPerson.setOnClickListener(v -> startActivity(new Intent(ListPeopleActivity.this, FormPersonActivity.class)));
@@ -42,16 +48,21 @@ public class ListPeopleActivity extends AppCompatActivity {
 
     private void setupListView() {
         ListView namesListView = findViewById(R.id.activity_main_names_list);
+        List<Person> people = dao.getPeople();
         namesListView.setAdapter(new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_list_item_1,
-                dao.getPeople()
+                people
         ));
 
         namesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Log.i("posicao alunuo", "onItemClick: " + position);
+                Person personSelected = people.get(position);
+                Log.i("Edit Personq", "onItemClick: Editing Person " + personSelected + " id= " + personSelected.getId());
+                Intent goToFormPersonActivity = new Intent(ListPeopleActivity.this, FormPersonActivity.class);
+                goToFormPersonActivity.putExtra("person", personSelected);
+                startActivity(goToFormPersonActivity);
             }
         });
     }

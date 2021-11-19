@@ -7,14 +7,42 @@ import java.util.Objects;
 
 public class Person implements Serializable {
 
-    private final String nameStr;
-    private final String emailStr;
-    private final String phoneStr;
+    private int id;
+    private String nameStr;
+    private String emailStr;
+    private String phoneStr;
 
     public Person(String nameStr, String emailStr, String phoneStr) {
         this.nameStr = nameStr;
         this.emailStr = emailStr;
         this.phoneStr = phoneStr;
+    }
+
+    public Person(int id, String nameStr, String emailStr, String phoneStr) {
+        this.id = id;
+        this.nameStr = nameStr;
+        this.emailStr = emailStr;
+        this.phoneStr = phoneStr;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setNameStr(String nameStr) {
+        this.nameStr = nameStr;
+    }
+
+    public void setEmailStr(String emailStr) {
+        this.emailStr = emailStr;
+    }
+
+    public void setPhoneStr(String phoneStr) {
+        this.phoneStr = phoneStr;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public String getNameStr() {
@@ -40,11 +68,11 @@ public class Person implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Person person = (Person) o;
-        return Objects.equals(nameStr, person.nameStr) && Objects.equals(emailStr, person.emailStr) && Objects.equals(phoneStr, person.phoneStr);
+        return id == person.id && Objects.equals(nameStr, person.nameStr) && Objects.equals(emailStr, person.emailStr) && Objects.equals(phoneStr, person.phoneStr);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(nameStr, emailStr, phoneStr);
+        return Objects.hash(id, nameStr, emailStr, phoneStr);
     }
 }

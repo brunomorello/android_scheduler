@@ -6,12 +6,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -57,23 +59,22 @@ public class ListPeopleActivity extends AppCompatActivity {
         adapter.addAll(personDAO.getPeople());
     }
 
+    @Override
+    public boolean onContextItemSelected(@NonNull MenuItem item) {
+        AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        Person personSelected = adapter.getItem(menuInfo.position);
+        Log.i("Delete Person", "setupListenerOnItemLongClick: Delete Person " + personSelected + " id= " + personSelected.getId());
+        personDAO.delete(personSelected);
+        adapter.remove(personSelected);
+        return super.onContextItemSelected(item);
+    }
+
     private void setupListView() {
         ListView namesListView = findViewById(R.id.activity_main_names_list);
 
         setAdapterToListView(namesListView);
         setupListenerOnItemClick(namesListView);
-        setupListenerOnItemLongClick(namesListView);
         registerForContextMenu(namesListView);
-    }
-
-    private void setupListenerOnItemLongClick(ListView namesListView) {
-        namesListView.setOnItemLongClickListener((parent, view, position, id) -> {
-            Person personSelected = (Person) parent.getItemAtPosition(position);
-            Log.i("Delete Person", "setupListenerOnItemLongClick: Delete Person " + personSelected + " id= " + personSelected.getId());
-            personDAO.delete(personSelected);
-            adapter.remove(personSelected);
-            return false;
-        });
     }
 
     private void setupListenerOnItemClick(ListView namesListView) {

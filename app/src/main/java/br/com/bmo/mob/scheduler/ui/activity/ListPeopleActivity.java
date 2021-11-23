@@ -11,15 +11,12 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.List;
 
 import br.com.bmo.mob.scheduler.R;
 import br.com.bmo.mob.scheduler.dao.PersonDAO;
@@ -49,7 +46,7 @@ public class ListPeopleActivity extends AppCompatActivity {
     @Override
     public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
         super.onCreateContextMenu(menu, v, menuInfo);
-        menu.add("Delete");
+        getMenuInflater().inflate(R.menu.activity_list_people_menu, menu);
     }
 
     @Override
@@ -63,10 +60,14 @@ public class ListPeopleActivity extends AppCompatActivity {
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
         Person personSelected = adapter.getItem(menuInfo.position);
-        Log.i("Delete Person", "setupListenerOnItemLongClick: Delete Person " + personSelected + " id= " + personSelected.getId());
+        Log.i("Delete Person", "Deleting Person " + personSelected + " id= " + personSelected.getId());
+        remove(personSelected);
+        return super.onContextItemSelected(item);
+    }
+
+    private void remove(Person personSelected) {
         personDAO.delete(personSelected);
         adapter.remove(personSelected);
-        return super.onContextItemSelected(item);
     }
 
     private void setupListView() {

@@ -4,9 +4,12 @@ import static br.com.bmo.mob.scheduler.ui.activity.ActiviiesConstants.PERSON_KEY
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.EditText;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -33,6 +36,19 @@ public class FormPersonActivity extends AppCompatActivity {
         bindInputValues(getIntent());
         setupSaveButton();
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_form_person_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.activity_form_person_menu_item_save)
+            savePersonAndFinish();
+        return super.onOptionsItemSelected(item);
     }
 
     private void setupSaveButton() {

@@ -9,7 +9,6 @@ import android.view.ContextMenu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import androidx.annotation.NonNull;
@@ -21,12 +20,14 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import br.com.bmo.mob.scheduler.R;
 import br.com.bmo.mob.scheduler.dao.PersonDAO;
 import br.com.bmo.mob.scheduler.model.Person;
+import br.com.bmo.mob.scheduler.ui.adapter.ListPeopleAdater;
 
 public class ListPeopleActivity extends AppCompatActivity {
 
     public static final String ACTIVITY_TITLE = "Family";
     private PersonDAO personDAO = new PersonDAO();
-    private ArrayAdapter<Person> adapter;
+//    private ArrayAdapter<Person> adapter;
+    private ListPeopleAdater adapter;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,8 +53,11 @@ public class ListPeopleActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        adapter.clear();
-        adapter.addAll(personDAO.getPeople());
+        updateViewList();
+    }
+
+    private void updateViewList() {
+        adapter.updateList(personDAO.getPeople());
     }
 
     @Override
@@ -94,10 +98,12 @@ public class ListPeopleActivity extends AppCompatActivity {
     }
 
     private void setAdapterToListView(ListView namesListView) {
-        adapter = new ArrayAdapter<>(
-                this,
-                android.R.layout.simple_list_item_1
-        );
+//        adapter = new ArrayAdapter<>(
+//                this,
+//                android.R.layout.simple_list_item_1
+//                R.layout.item_list_person
+//        );
+        adapter = new ListPeopleAdater(this);
         namesListView.setAdapter(adapter);
     }
 }

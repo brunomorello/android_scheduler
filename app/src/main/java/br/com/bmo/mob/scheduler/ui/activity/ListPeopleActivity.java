@@ -36,9 +36,6 @@ public class ListPeopleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list_people);
         setTitle(ACTIVITY_TITLE);
 
-        personDAO.save(new Person("Bruno", "test@test.com", "123"));
-        personDAO.save(new Person("Jade", "jade@gmail.com", "321"));
-
         FloatingActionButton fabNewPerson = findViewById(R.id.activity_list_people_fab_new_person);
         fabNewPerson.setOnClickListener(v -> startActivity(new Intent(ListPeopleActivity.this, FormPersonActivity.class)));
         setupListView();

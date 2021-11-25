@@ -4,8 +4,13 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="../../../../layout/custom_preview.xml" value="0.21875" />
+        <entry key="app/src/main/res/drawable-anydpi/ic_action_save_person.xml" value="0.25364583333333335" />
         <entry key="app/src/main/res/layout/activity_form_person.xml" value="0.20364583333333333" />
+        <entry key="app/src/main/res/layout/activity_list_people.xml" value="0.2375" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/item_list_person.xml" value="0.2375" />
+        <entry key="app/src/main/res/menu/activity_form_person_menu.xml" value="0.2375" />
+        <entry key="app/src/main/res/menu/activity_list_people_menu.xml" value="0.2375" />
       </map>
     </option>
   </component>

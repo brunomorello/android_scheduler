@@ -2,6 +2,8 @@ package br.com.bmo.mob.scheduler.ui.activity;
 
 import static br.com.bmo.mob.scheduler.ui.activity.ActiviiesConstants.PERSON_KEY;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -60,12 +62,26 @@ public class ListPeopleActivity extends AppCompatActivity {
     @Override
     public boolean onContextItemSelected(@NonNull MenuItem item) {
         if (item.getItemId() == R.id.activity_list_people_menu_item_delete) {
-            AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-            Person personSelected = adapter.getItem(menuInfo.position);
-            Log.i("Delete Person", "Deleting Person " + personSelected + " id= " + personSelected.getId());
-            remove(personSelected);
+            confirmDeleteDialog(item);
         }
         return super.onContextItemSelected(item);
+    }
+
+    private void confirmDeleteDialog(@NonNull MenuItem item) {
+        new AlertDialog.Builder(this)
+                .setTitle("Delete Person")
+                .setMessage("Are you sure?")
+                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+                        Person personSelected = adapter.getItem(menuInfo.position);
+                        Log.i("Delete Person", "Deleting Person " + personSelected + " id= " + personSelected.getId());
+                        remove(personSelected);
+                    }
+                })
+                .setNegativeButton("No", null)
+                .show();
     }
 
     private void remove(Person personSelected) {

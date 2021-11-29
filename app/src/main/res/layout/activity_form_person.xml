@@ -12,7 +12,7 @@
     <EditText android:id="@+id/activity_form_person_editText_name"
         android:layout_width="match_parent"
         android:layout_margin="8dp"
-        android:hint="Name"
+        android:hint="@string/name"
         android:inputType="textCapWords"
         android:layout_height="wrap_content" />
 
@@ -20,21 +20,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:hint="Phone"
+        android:hint="@string/phone"
         android:inputType="phone" />
 
     <EditText android:id="@+id/activity_form_person_editText_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:hint="E-mail"
+        android:hint="@string/email"
         android:inputType="textEmailAddress" />
 
     <Button android:id="@+id/activity_form_person_btn_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="Save"
+        android:text="@string/save"
         />
 
 </LinearLayout>

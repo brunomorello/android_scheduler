@@ -1,12 +1,7 @@
 package br.com.bmo.mob.scheduler.dao;
 
-import android.os.Build;
-
-import androidx.annotation.RequiresApi;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import br.com.bmo.mob.scheduler.model.Person;
 

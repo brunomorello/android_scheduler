@@ -15,7 +15,8 @@
         android:clickable="true"
         android:focusable="true"
         android:src="@drawable/ic_action_name"
-        tools:ignore="SpeakableTextPresentCheck" />
+        tools:ignore="SpeakableTextPresentCheck"
+        android:contentDescription="@string/new_person" />
 
     <ListView
         android:id="@+id/activity_main_names_list"

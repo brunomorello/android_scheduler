@@ -6,7 +6,7 @@
 
 <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <EditText android:id="@+id/activity_form_person_editText_name"
@@ -14,21 +14,24 @@
         android:layout_margin="8dp"
         android:hint="@string/name"
         android:inputType="textCapWords"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:autofillHints="" />
 
     <EditText android:id="@+id/activity_form_person_editText_phone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:hint="@string/phone"
-        android:inputType="phone" />
+        android:inputType="phone"
+        android:autofillHints="" />
 
     <EditText android:id="@+id/activity_form_person_editText_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:hint="@string/email"
-        android:inputType="textEmailAddress" />
+        android:inputType="textEmailAddress"
+        android:autofillHints="" />
 
     <Button android:id="@+id/activity_form_person_btn_save"
         android:layout_width="match_parent"

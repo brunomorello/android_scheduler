@@ -13,12 +13,12 @@ import java.util.List;
 import br.com.bmo.mob.scheduler.R;
 import br.com.bmo.mob.scheduler.model.Person;
 
-public class ListPeopleAdater extends BaseAdapter {
+public class ListPeopleAdapter extends BaseAdapter {
 
     private final List<Person> people = new ArrayList<>();
     private final Context context;
 
-    public ListPeopleAdater(Context context) {
+    public ListPeopleAdapter(Context context) {
         this.context = context;
     }
 

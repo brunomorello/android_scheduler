@@ -8,9 +8,9 @@ import java.util.Objects;
 public class Person implements Serializable {
 
     private int id;
-    private String nameStr;
-    private String emailStr;
-    private String phoneStr;
+    private final String nameStr;
+    private final String emailStr;
+    private final String phoneStr;
 
     public Person(String nameStr, String emailStr, String phoneStr) {
         this.nameStr = nameStr;
@@ -18,27 +18,8 @@ public class Person implements Serializable {
         this.phoneStr = phoneStr;
     }
 
-    public Person(int id, String nameStr, String emailStr, String phoneStr) {
-        this.id = id;
-        this.nameStr = nameStr;
-        this.emailStr = emailStr;
-        this.phoneStr = phoneStr;
-    }
-
     public void setId(int id) {
         this.id = id;
-    }
-
-    public void setNameStr(String nameStr) {
-        this.nameStr = nameStr;
-    }
-
-    public void setEmailStr(String emailStr) {
-        this.emailStr = emailStr;
-    }
-
-    public void setPhoneStr(String phoneStr) {
-        this.phoneStr = phoneStr;
     }
 
     public int getId() {

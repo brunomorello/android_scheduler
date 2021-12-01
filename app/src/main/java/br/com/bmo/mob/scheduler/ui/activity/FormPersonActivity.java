@@ -1,6 +1,6 @@
 package br.com.bmo.mob.scheduler.ui.activity;
 
-import static br.com.bmo.mob.scheduler.ui.activity.ActiviiesConstants.PERSON_KEY;
+import static br.com.bmo.mob.scheduler.ui.activity.ActivitiesConstants.PERSON_KEY;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -53,9 +53,7 @@ public class FormPersonActivity extends AppCompatActivity {
 
     private void setupSaveButton() {
         Button btnSave = findViewById(R.id.activity_form_person_btn_save);
-        btnSave.setOnClickListener(v -> {
-            savePersonAndFinish();
-        });
+        btnSave.setOnClickListener(v -> savePersonAndFinish());
     }
 
     private void savePersonAndFinish() {
